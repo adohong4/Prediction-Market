@@ -5,6 +5,7 @@ import { Navbar } from "./Navbar";
 import { predictionMarketContract } from "../../constants/contracts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { MarketCardSkeleton } from "./skeletonCard";
+import { MarketCard } from "./marketCard";
 
 export default function PredictionMarketDashboard() {
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
@@ -37,7 +38,11 @@ export default function PredictionMarketDashboard() {
                                 <TabsContent value="active">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                                         {Array.from({ length: Number(marketCount) }, (_, index) => (
-                                            <></>
+                                            <MarketCard
+                                                key={index}
+                                                index={index}
+                                                filter="active"
+                                            />
                                         ))}
                                     </div>
                                 </TabsContent>
@@ -45,7 +50,11 @@ export default function PredictionMarketDashboard() {
                                 <TabsContent value="pending">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                                         {Array.from({ length: Number(marketCount) }, (_, index) => (
-                                            <></>
+                                            <MarketCard
+                                                key={index}
+                                                index={index}
+                                                filter="pending"
+                                            />
                                         ))}
                                     </div>
                                 </TabsContent>
@@ -53,7 +62,11 @@ export default function PredictionMarketDashboard() {
                                 <TabsContent value="resolved">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                                         {Array.from({ length: Number(marketCount) }, (_, index) => (
-                                            <></>
+                                            <MarketCard
+                                                key={index}
+                                                index={index}
+                                                filter="resolved"
+                                            />
                                         ))}
                                     </div>
                                 </TabsContent>
