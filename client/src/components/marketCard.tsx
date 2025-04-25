@@ -2,6 +2,12 @@ import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { predictionMarketContract } from "../../constants/contracts";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { MarketCardSkeleton } from "./skeletonCard";
+import { MarketProgress } from "./marketProgress";
+import { MarketBuyInterface } from "./marketBuyInterface";
+import { MarketSharesDisplay } from "./marketShares";
+import { MarketResolved } from "./marketResolved";
+import { MarketPending } from "./marketPending";
+import { MarketTime } from "./marketTime";
 
 interface MarketCardProps {
     index: number;
@@ -93,31 +99,43 @@ export function MarketCard({ index, filter }: MarketCardProps) {
             ) : (
                 <>
                     <CardHeader>
-
+                        {market && <MarketTime endTime={market.endTime} />}
                         <CardTitle>{market?.question}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {market && (
                             //Market Progress component
-                            <></>
+                            <MarketProgress
+                                optionA={market.optionA}
+                                optionB={market.optionB}
+                                totalOptionAShares={market.totalOptionAShares}
+                                totalOptionBShares={market.totalOptionBShares}
+                            />
                         )}
                         {new Date(Number(market?.endTime) * 1000) < new Date() ? (
                             market?.resolved ? (
-                                //Market Resolved component
-                                <></>
+                                <MarketResolved
+                                    marketId={index}
+                                    outcome={market.outcome}
+                                    optionA={market.optionA}
+                                    optionB={market.optionB}
+                                />
                             ) : (
-                                //Market Pending component
-                                <></>
+                                <MarketPending />
                             )
                         ) : (
-                            //Market Buy Interface
-                            <></>
+                            <MarketBuyInterface
+                                marketId={index}
+                                market={market!}
+                            />
                         )}
                     </CardContent>
                     <CardFooter>
                         {market && sharesBalance && (
                             //Market Share component
-                            <></>
+                            <MarketSharesDisplay
+                                market={market}
+                                sharesBalance={sharesBalance} />
                         )}
                     </CardFooter>
                 </>
